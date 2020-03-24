@@ -9,7 +9,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
 ## Objectives
 
-- [Create Infrastructure to support Anupoint Runtime Fabric (RTF)](#iaas)
+- [Create Infrastructure to support Anypoint Runtime Fabric (RTF)](#iaas)
 - [Install Anypoint Runtime Fabric (RTF)](#installrtf)
 - [Deploy Test Application](#deployapp)
 
@@ -443,7 +443,7 @@ Now that we have a running installation of Anypoint Runtime Fabric lets test tha
 
     ![](images/image33.png)
 
-### **STEP 10**: Create Certificate-Key pair
+### **STEP 11**: Create Certificate-Key pair
 
 In this step we will create a new certificate to but used by RTF. If you do not have **openssl** installed on your laptop you will need to install before moving forward.
 
@@ -474,7 +474,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 ![](images/image34.png)
 
-### **STEP 11**: Create a Secret Group in Anypoint Secret Manager
+### **STEP 12**: Create a Secret Group in Anypoint Secret Manager
 
 - Back in the browser, naviagate to **Secrets Manager** and click **Create Secret Group**
 
@@ -502,7 +502,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 - Click **Save**
 
-### **STEP 12**: Create a TLS Contecdt in Anypoint Secret Manager
+### **STEP 13**: Create a TLS Contecdt in Anypoint Secret Manager
 
 - In the left sidebase, select **TLS Contecxt**
 
@@ -530,7 +530,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
     ![](images/image39.png)
 
-### **STEP 13**: Enable Inbound Traffic
+### **STEP 14**: Enable Inbound Traffic
 
 - Navigate back to your **Runtime Fabric**. Select tab **Inbound Traffic**
 
@@ -552,7 +552,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 - Click **Deploy**
 
-### **STEP 14**: Deploy Application
+### **STEP 15**: Deploy Application
 
 - Now we are ready to deploy an application. In this example we will use a sameple application that is in the github repository. To use this application you will need to clone the repository so that you can access the file from your local files system.
 
