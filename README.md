@@ -554,6 +554,34 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 ### **STEP 14**: Deploy Application
 
+- Now we are ready to deploy an application. Use the following command to download a demo application.
+
+```bash
+curl https://github.com/mulesoft-consulting/RTFonGCP/raw/master/rtf-demo-1.0.zip --output  rtf-demo-1.0.zip
+```
+
+![](images/image42.png)
+
+- In Anypoint Platform, navigate to **Runtime Manager** and click **Applications**
+
+- Click **Deploy Application**
+
+- Enter the following information:
+
+    **Application Name:** `rtfdemo`
+
+    **Deployment Target:** `rtf_on_gcp`
+
+    **Application File:** `<upload rtf-demo-1.0.zip from local file system>`
+
+    **Runtime Version:** `3.9.4`
+
+    ![](images/image43.png)
+
+- Click **Deploy Application**
+
+
+
 
 
 
