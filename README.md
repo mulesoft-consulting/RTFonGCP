@@ -1,5 +1,5 @@
 ![](images/title.png)  
-Update: March 19, 2020
+Update: March 24, 2020
 
 ## Introduction
 
@@ -554,10 +554,12 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 ### **STEP 14**: Deploy Application
 
-- Now we are ready to deploy an application. Use the following command to download a demo application.
+- Now we are ready to deploy an application. In this example we will use a sameple application that is in the github repository. To use this application you will need to clone the repository so that you can access the file from your local files system.
+
+- Use the following command to clone the github repository:
 
 ```bash
-curl https://github.com/mulesoft-consulting/RTFonGCP/raw/master/rtf-demo-1.0.zip --output  rtf-demo-1.0.zip
+git clone https://github.com/mulesoft-consulting/RTFonGCP.git
 ```
 
 ![](images/image42.png)
@@ -580,10 +582,23 @@ curl https://github.com/mulesoft-consulting/RTFonGCP/raw/master/rtf-demo-1.0.zip
 
 - Click **Deploy Application**
 
+- Wait for application to deploy then click on application to view deployment details.
 
+    ![](images/image44.png)
 
+- As you can see the **Application url** is based on the certificate entry that we created in a previous step. To be able to access this we would need to crearte a DNS entry. To keep things simple we will just update our local host file to have the **public ip** for the **controller vm** point to the application hostname.
 
+- Add the following line to your local **hosts** file.
 
+```bash
+# RTF On GCP Cookbook Sample Application
+<Eternal IP Controller VM>  rtfdemo.domain.com
+```
 
+- Now access the folling URL:
 
+    <https://rtfdemo.domain.com/welcome>
 
+    ![](images/image45.png)
+
+- **CONGRADULATIONS!!!** You have completed installing Anypoint Runtime Fabric on Google Cloud Platform
