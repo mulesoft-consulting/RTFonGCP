@@ -132,9 +132,9 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     **Target Tags:** `rtf-allow-egress`
 
-    **Source IP ranges:** `0.0.0.0/0`
+    **Destination IP ranges:** `0.0.0.0/0`
 
-    **Protocals and Ports:** `upd:123 tcp:443,5044`
+    **Protocals and Ports:** `udp:123 tcp:443,5044`
 
 
 ![](images/image7.png)
@@ -193,9 +193,23 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     ![](images/image12.png)
 
-- Click **Networking** and add the following **Network Tags:** `rtf-allow-ssh rtf-allow-install rtf-allow-https rtf-allow-ops-center rtf-allow-internal rtf-allow-egress`
+- Click **Networking** and add the following **Network Tags:**
 
-    ![](images/image13.png)
+```
+    rtf-allow-ssh
+    
+    rtf-allow-install
+    
+    rtf-allow-https
+    
+    rtf-allow-ops-center
+    
+    rtf-allow-internal
+    
+    rtf-allow-egress
+```
+
+![](images/image13.png)
 
 - Click *Network Interface**
 
