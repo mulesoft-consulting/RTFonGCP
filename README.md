@@ -20,6 +20,8 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 <a id="iaas"></a>
 ## Create Infrastructure to support Anypoint Runtime Fabric (RTF)
 
+**NOTE:** If using a shared GCP project please add your initials at the end of each name. 
+
 ### **STEP 1**: Create Google VPC
 
 - From any browser, go to the URL to access Google Cloud Console:
@@ -30,7 +32,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     ![](images/image1.png)
 
-- Click **Create a VPC network**
+- Click **CREATE VPC NETWORK**
 
 - Enter the following information:
 
@@ -50,7 +52,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
 ### **STEP 2**: Create Firewall Rules
 
-- Next we need to create **Firewall Rules** to open needed ports for installation of RTF and access to Virtual Machines (VM)
+Next we need to create **Firewall Rules** to open needed ports for installation of RTF and access to Virtual Machines (VM)
 
 - Under the **VPC Network** menu click **Firewall Rules**. At the top of the page click **CREATE FIREWALL RULE**
 
@@ -64,7 +66,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     **Source IP ranges:** `0.0.0.0/0`
 
-    **Protocals and Ports:** `tcp:22`
+    **Protocols and Ports:** `tcp:22`
 
     ![](images/image4.png)![](images/image5.png)
 
@@ -72,7 +74,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     ![](images/image6.png)
 
-- Repeat the previous steps to create the addition 4 Firewall rules:
+Repeat the previous steps to create the addition 5 Firewall rules:
 
 - Firewall Rule **rtf-allow-install**:
 
@@ -84,7 +86,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     **Source IP ranges:** `0.0.0.0/0`
 
-    **Protocals and Ports:** `tcp:4242, 61008-61010, 61022-61024`
+    **Protocols and Ports:** `tcp:4242, 61008-61010, 61022-61024`
 
 - Firewall Rule **rtf-allow-https**:
 
@@ -96,7 +98,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     **Source IP ranges:** `0.0.0.0/0`
 
-    **Protocals and Ports:** `tcp:443`
+    **Protocols and Ports:** `tcp:443`
 
 - Firewall Rule **rtf-allow-ops-center**:
 
@@ -108,7 +110,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     **Source IP ranges:** `0.0.0.0/0`
 
-    **Protocals and Ports:** `tcp:32009`
+    **Protocols and Ports:** `tcp:32009`
 
 - Firewall Rule **rtf-allow-internal**:
 
@@ -120,7 +122,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     **Source IP ranges:** `10.0.0.0/16`
 
-    **Protocals and Ports:** `All`
+    **Protocols and Ports:** `All`
 
 - Firewall Rule **rtf-allow-egress**:
 
@@ -134,12 +136,14 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     **Destination IP ranges:** `0.0.0.0/0`
 
-    **Protocals and Ports:** `udp:123 tcp:443,5044`
+    **Protocols and Ports:** `udp:123 tcp:443, 5044`
 
 
 ![](images/image7.png)
 
 ### **STEP 3**: Create Controller VM
+
+Now that we have our network defined we will create the VM's that will host our RTF installation. We will be creating a [Development Configuration](https://docs.mulesoft.com/runtime-fabric/1.4/architecture#development-configuration) which consists of 1 controller vm and 2 worker vm's.
 
 - Click on the upper left navigation bar. Select **Compute Engine -> VM instances**
 
@@ -169,7 +173,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     ![](images/image10.png)
 
-- Expand **Management, security, disks, networking, sole tenancy**
+- Scroll down and expand **Management, security, disks, networking, sole tenancy**
 
 - Select **Disks** and click **Add New Disk**
 
@@ -211,7 +215,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
 ![](images/image13.png)
 
-- Click *Network Interface**
+- Click **Network Interface**
 
 - Change **Network** to **VPC** created in previous step.
 
@@ -237,11 +241,11 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
 ### **STEP 4**: Create Worker VMs
 
-- Now we will create 2 worker VMs following the same steps as the controller vm will some small changes.
+Now we will create 2 worker VMs following the same steps as the controller vm will some small changes.
 
 - Click **CREATE INSTANCE**
 
-    **Name:** `rtf-worker` or unique name
+    **Name:** `rtf-worker1` or unique name
 
     **Region:** `select same region as subnet created`
 
@@ -281,11 +285,23 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     ![](images/image18.png)
 
-- Click **Networking** and add the following **Network Tags:** `rtf-allow-ssh rtf-allow-install rtf-allow-https rtf-allow-internal rtf-allow-egress`
+- Click **Networking** and add the following **Network Tags:** 
 
-    ![](images/image19.png)
+```
+    rtf-allow-ssh
+    
+    rtf-allow-install
+    
+    rtf-allow-https
+    
+    rtf-allow-internal
+    
+    rtf-allow-egress
+```
 
-- Click *Network Interface**
+![](images/image19.png)
+
+- Click **Network Interface**
 
 - Change **Network** to **VPC** created in previous step.
 
@@ -314,11 +330,11 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 <a id="installrtf"></a>
 ## Install Anypoint Runtime Fabric (RTF)
 
-In this section will will walk through installing RTF. For compolete instuctiuns please visit [MuleSoft Docs](https://docs.mulesoft.com/runtime-fabric/1.4/)
+In this section will will walk through installing RTF. For complete instructions please visit [MuleSoft Docs](https://docs.mulesoft.com/runtime-fabric/1.4/)
 
 ### **STEP 5**: Create a Runtime Fabric using Runtime Manager
 
-- From any browser, go to the URL to access **Anyppoint Platform**
+- From any browser, go to the URL to access **Anypoint Platform**
 
     <https://anypoint.mulesoft.com>
 
@@ -385,7 +401,7 @@ sudo mkdir -p /opt/anypoint/runtimefabric
 sudo chown dennis_foley:dennis_foley /opt/anypoint/runtimefabric
 ```
 
-- Copy install script to runtime diretory
+- Copy install script to runtime directory
 
 ```bash
 cd
