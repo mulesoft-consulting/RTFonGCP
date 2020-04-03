@@ -1,5 +1,5 @@
 ![](images/title.png)  
-Update: March 24, 2020
+Update: April 02, 2020
 
 ## Introduction
 
@@ -398,7 +398,7 @@ sudo mkdir -p /opt/anypoint/runtimefabric
 - Change ownership of **runtimefabric** directory to current user
 
 ```bash
-sudo chown dennis_foley:dennis_foley /opt/anypoint/runtimefabric
+sudo chown <your username>:<your username> /opt/anypoint/runtimefabric
 ```
 
 - Copy install script to runtime directory
@@ -454,7 +454,7 @@ sudo /opt/anypoint/runtimefabric/init.sh
 
 ![](images/image31.png)
 
-- If you go back to **Anypoint Platform** and go to **Runtime Fabrics** you should see that your RTF environment is now **Actice**
+- If you go back to **Anypoint Platform** and go to **Runtime Fabrics** you should see that your RTF environment is now **Active**
 
     ![](images/image32.png)
 
@@ -463,13 +463,13 @@ sudo /opt/anypoint/runtimefabric/init.sh
 
 Now that we have a running installation of Anypoint Runtime Fabric lets test that we can deploy an application to RTF.
 
-### **STEP 10**: Accociate Environments
+### **STEP 10**: Associate Environments
 
 - If not already on the page, navigate back to your newly created **Runtime Fabric** in **Anypoint Platform**
 
-- Click on **Accociate Environments**
+- Click on **Associate Environments**
 
-- Select the environment you would like to assiciate with this instance of RTF. In this example we have selected **Sandbox**. Click **Apply Allocations**
+- Select the environment you would like to associate with this instance of RTF. In this example we have selected **Sandbox**. Click **Apply Allocations**
 
     ![](images/image33.png)
 
@@ -477,7 +477,7 @@ Now that we have a running installation of Anypoint Runtime Fabric lets test tha
 
 In this step we will create a new certificate to but used by RTF. If you do not have **openssl** installed on your laptop you will need to install before moving forward.
 
-- Open a terminal windown and execute the following command
+- Open a terminal window and execute the following command
 
 ```bash
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
@@ -485,7 +485,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 - For the prompts we will use the following change as needed:
 
-    **PEM pass phrease:** `mulesoft`
+    **PEM pass phrase:** `mulesoft`
 
     **Country:** `US`
 
@@ -506,7 +506,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 ### **STEP 12**: Create a Secret Group in Anypoint Secret Manager
 
-- Back in the browser, naviagate to **Secrets Manager** and click **Create Secret Group**
+- Back in the browser, navigate to **Secrets Manager** and click **Create Secret Group**
 
 - Enter a name **rtf-group** and click **Save**
 
@@ -532,9 +532,9 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 - Click **Save**
 
-### **STEP 13**: Create a TLS Contecdt in Anypoint Secret Manager
+### **STEP 13**: Create a TLS Context in Anypoint Secret Manager
 
-- In the left sidebase, select **TLS Contecxt**
+- In the left sidebase, select **TLS Context**
 
 - Click **Add TLS Context**
 
@@ -584,7 +584,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 ### **STEP 15**: Deploy Application
 
-- Now we are ready to deploy an application. In this example we will use a sameple application that is in the github repository. To use this application you will need to clone the repository so that you can access the file from your local files system.
+Now we are ready to deploy an application. In this example we will use a sample application that is in the github repository. To use this application you will need to clone the repository so that you can access the file from your local files system.
 
 - Use the following command to clone the github repository:
 
@@ -616,7 +616,7 @@ git clone https://github.com/mulesoft-consulting/RTFonGCP.git
 
     ![](images/image44.png)
 
-- As you can see the **Application url** is based on the certificate entry that we created in a previous step. To be able to access this we would need to crearte a DNS entry. To keep things simple we will just update our local host file to have the **public ip** for the **controller vm** point to the application hostname.
+- As you can see the **Application url** is based on the certificate entry that we created in a previous step. To be able to access this we would need to create a DNS entry. To keep things simple we will just update our local host file to have the **public ip** for the **controller vm** point to the application hostname.
 
 - Add the following line to your local **hosts** file.
 
@@ -625,7 +625,7 @@ git clone https://github.com/mulesoft-consulting/RTFonGCP.git
 <Eternal IP Controller VM>  rtfdemo.domain.com
 ```
 
-- Now access the folling URL:
+- Now access the following URL:
 
     <https://rtfdemo.domain.com/welcome>
 
