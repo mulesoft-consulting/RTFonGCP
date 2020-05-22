@@ -1,5 +1,5 @@
 ![](images/title.png)  
-Update: April 02, 2020
+Update: May 22, 2020
 
 ## Introduction
 
@@ -9,9 +9,28 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
 ## Objectives
 
-- [Create Infrastructure to support Anypoint Runtime Fabric (RTF)](#iaas)
-- [Install Anypoint Runtime Fabric (RTF)](#installrtf)
-- [Deploy Test Application](#deployapp)
+- **[Create Infrastructure to support Anypoint Runtime Fabric (RTF)](#iaas)**
+    - [**STEP 1**: Create Google VPC](#step1)
+    - [**STEP 2**: Create Firewall Rules](#step2)
+    - [**STEP 3**: Create Controller VM](#step3)
+    - [**STEP 4**: Create Worker VMs](#step4)
+- **[Install Anypoint Runtime Fabric (RTF)](#installrtf)**
+    - [**STEP 5**: Create a Runtime Fabric using Runtime Manager](#step5)
+    - [**STEP 6**: Download Install scripts](#step6)
+    - [**STEP 7**: Setup and Configure Environment](#step7)
+    - [**STEP 8**: Setup and Generate Environment Configuration](#step8)
+    - [**STEP 9**: Install RTF](#step9)
+- **[Deploy Test Application](#deployapp)**
+    - [**STEP 10**: Associate Environments](#step10)
+    - [**STEP 11**: Create Certificate-Key pair](#step11)
+    - [**STEP 12**: Create a Secret Group in Anypoint Secret Manager](#step12)
+    - [**STEP 13**: Create a TLS Context in Anypoint Secret Manager](#step13)
+    - [**STEP 14**: Enable Inbound Traffic](#step14)
+    - [**STEP 15**: Deploy Application](#step15)
+- **[Enable OpsCenter](#opscenter)**
+    - [**STEP 16**: Retrieve OpsCenter URL and Credentials](#step16)
+    - [**STEP 17**: View Kubernetes Details](#step17)
+
 
 ## Required Artifacts
 
@@ -22,6 +41,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
 **NOTE:** If using a shared GCP project please add your initials at the end of each name. 
 
+<a id="step1"></a>
 ### **STEP 1**: Create Google VPC
 
 - From any browser, go to the URL to access Google Cloud Console:
@@ -50,6 +70,7 @@ This workshop will walk you through the process of installing **Anypoint Runtime
 
     ![](images/image3.png)
 
+<a id="step2"></a>
 ### **STEP 2**: Create Firewall Rules
 
 Next we need to create **Firewall Rules** to open needed ports for installation of RTF and access to Virtual Machines (VM)
@@ -138,9 +159,9 @@ Repeat the previous steps to create the addition 5 Firewall rules:
 
     **Protocols and Ports:** `udp:123 tcp:443, 5044`
 
-
 ![](images/image7.png)
 
+<a id="step3"></a>
 ### **STEP 3**: Create Controller VM
 
 Now that we have our network defined we will create the VM's that will host our RTF installation. We will be creating a [Development Configuration](https://docs.mulesoft.com/runtime-fabric/1.4/architecture#development-configuration) which consists of 1 controller vm and 2 worker vm's.
@@ -239,6 +260,7 @@ Now that we have our network defined we will create the VM's that will host our 
 
     ![](images/image16.png)
 
+<a id="step4"></a>
 ### **STEP 4**: Create Worker VMs
 
 Now we will create 2 worker VMs following the same steps as the controller vm will some small changes.
@@ -332,6 +354,7 @@ Now we will create 2 worker VMs following the same steps as the controller vm wi
 
 In this section will will walk through installing RTF. For complete instructions please visit [MuleSoft Docs](https://docs.mulesoft.com/runtime-fabric/1.4/)
 
+<a id="step5"></a>
 ### **STEP 5**: Create a Runtime Fabric using Runtime Manager
 
 - From any browser, go to the URL to access **Anypoint Platform**
@@ -354,6 +377,7 @@ In this section will will walk through installing RTF. For complete instructions
 
 - Later will we come back to this page for the **activation code**
 
+<a id="step6"></a>
 ### **STEP 6**: Download Install scripts
 
 The following steps should be executed on all 3 VMs. Steps below will be for just controller vm.
@@ -385,6 +409,7 @@ mkdir -p ./rtf-install-scripts && unzip rtf-install-scripts.zip -d ./rtf-install
 
 - repeat these steps on the other 2 VM's
 
+<a id="step7"></a>
 ### **STEP 7**: Setup and Configure Environment
 
 The following steps should be executed on all 3 VMs. Steps below will be for just controller vm.
@@ -410,6 +435,7 @@ cp ./rtf-install-scripts/scripts/init.sh /opt/anypoint/runtimefabric/init.sh && 
 
 ![](images/image28.png)
 
+<a id="step8"></a>
 ### **STEP 8**: Setup and Generate Environment Configuration
 
 - On the controller vm change into the install script directory for manual install
@@ -434,6 +460,7 @@ RTF_MULE_LICENSE='<Base64 MuleSoft License>' \
 
 - From the output of the **generate-config.sh** execute the **cat** command to create the **env** file for each VM.
 
+<a id="step9"></a>
 ### **STEP 9**: Install RTF
 
 - Run the **init.sh** script in privileged mode on the controller VM.
@@ -463,6 +490,7 @@ sudo /opt/anypoint/runtimefabric/init.sh
 
 Now that we have a running installation of Anypoint Runtime Fabric lets test that we can deploy an application to RTF.
 
+<a id="step10"></a>
 ### **STEP 10**: Associate Environments
 
 - If not already on the page, navigate back to your newly created **Runtime Fabric** in **Anypoint Platform**
@@ -473,6 +501,7 @@ Now that we have a running installation of Anypoint Runtime Fabric lets test tha
 
     ![](images/image33.png)
 
+<a id="step11"></a>
 ### **STEP 11**: Create Certificate-Key pair
 
 In this step we will create a new certificate to but used by RTF. If you do not have **openssl** installed on your laptop you will need to install before moving forward.
@@ -504,6 +533,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 ![](images/image34.png)
 
+<a id="step12"></a>
 ### **STEP 12**: Create a Secret Group in Anypoint Secret Manager
 
 - Back in the browser, navigate to **Secrets Manager** and click **Create Secret Group**
@@ -532,6 +562,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 - Click **Save**
 
+<a id="step13"></a>
 ### **STEP 13**: Create a TLS Context in Anypoint Secret Manager
 
 - In the left sidebase, select **TLS Context**
@@ -560,6 +591,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
     ![](images/image39.png)
 
+<a id="step14"></a>
 ### **STEP 14**: Enable Inbound Traffic
 
 - Navigate back to your **Runtime Fabric**. Select tab **Inbound Traffic**
@@ -582,6 +614,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
 - Click **Deploy**
 
+<a id="step15"></a>
 ### **STEP 15**: Deploy Application
 
 Now we are ready to deploy an application. In this example we will use a sample application that is in the github repository. To use this application you will need to clone the repository so that you can access the file from your local files system.
@@ -631,4 +664,50 @@ git clone https://github.com/mulesoft-consulting/RTFonGCP.git
 
     ![](images/image45.png)
 
-- **CONGRADULATIONS!!!** You have completed installing Anypoint Runtime Fabric on Google Cloud Platform
+
+<a id="opscenter"></a>
+## Enable OpsCenter
+
+In this section, you enable OpsCenter, the main graphical management tool for Kubernetes clusters. OpsCenter is part of the TeleKube distribution, but not publicly accessible by default after a Runtime Fabric installation. 
+
+Now that we have a running installation of Anypoint Runtime Fabric lets test that we can deploy an application to RTF.
+
+<a id="step16"></a>
+### **STEP 16**: Retrieve OpsCenter URL and Credentials
+
+- From the Control VM SSH session execute the following command to locate credentials and URL for administrator access:
+
+```bash
+cat /var/log/rtf-init.log | grep -B 1 -A 3 "Ops Center access"
+```
+
+![](images/image46.png)
+
+- Replace private IP **10.0.0.5** with public IP for controller VM.
+
+- Open browser and enter URL you just retrieved.
+
+- Since we are using self signed certificates you will need to confirm access to the URL. Click **Proceed to IP (unsafe)**
+
+    ![](images/image47.png)
+
+- On login page use username and password from the output of the command above and click **Login**
+
+    ![](images/image48.png)
+
+- You should see a landing page
+
+    ![](images/image49.png)
+
+<a id="step17"></a>
+### **STEP 17**: View Kubernetes Details
+
+- Let view details for the Pods running the deployed demo application. On the left hand side, click Kubernetes then click Pods. On the right hand side click drop down and select namespace that consists of a long sequence of numbers and characters.
+
+    ![](images/image50.png)
+
+- On this screen you can see details around the deployment of the application.
+
+    ![](images/image51.png)
+
+- **CONGRATULATIONS!!!** You have completed installing Anypoint Runtime Fabric on Google Cloud Platform
