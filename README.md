@@ -398,7 +398,7 @@ sudo yum install zip unzip -y
 
 ![](images/image26.png)
 
-- Download and Extract install sceripts
+- Download and Extract install scripts
 
 ```bash
 curl -L https://anypoint.mulesoft.com/runtimefabric/api/download/scripts/latest --output rtf-install-scripts.zip
